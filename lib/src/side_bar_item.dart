@@ -55,8 +55,8 @@ class SideBarItem extends StatelessWidget {
     if (item.children.isEmpty) {
       return ListTile(
         contentPadding: _getTilePadding(depth),
-        leading: _buildIcon(item.icon, selected),
-        title: _buildTitle(item.title, selected),
+        leading: _buildIcon(item, selected),
+        title: _buildTitle(item.title, item.textStyle != null ? item.textStyle : textStyle, selected),
         selected: selected,
         tileColor: backgroundColor,
         selectedTileColor: activeBackgroundColor,
@@ -65,6 +65,7 @@ class SideBarItem extends StatelessWidget {
             onSelected(item);
           }
         },
+        dense: item is HeaderMenuItem ? true : false,
       );
     }
 
@@ -90,8 +91,8 @@ class SideBarItem extends StatelessWidget {
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         tilePadding: _getTilePadding(depth),
-        leading: _buildIcon(item.icon),
-        title: _buildTitle(item.title),
+        leading: _buildIcon(item),
+        title: _buildTitle(item.title, textStyle),
         initiallyExpanded: selected,
         children: childrenTiles,
       ),
@@ -110,10 +111,10 @@ class SideBarItem extends StatelessWidget {
     return false;
   }
 
-  Widget _buildIcon(IconData icon, [bool selected = false]) {
-    return icon != null
+  Widget _buildIcon(MenuItem item, [bool selected = false]) {
+    return item.icon != null
         ? Icon(
-            icon,
+            item.icon,
             size: 22,
             color: selected
                 ? activeIconColor != null
@@ -123,13 +124,15 @@ class SideBarItem extends StatelessWidget {
                     ? iconColor
                     : textStyle.color,
           )
-        : SizedBox();
+        : (item is HeaderMenuItem)
+            ? null
+            : SizedBox();
   }
 
-  Widget _buildTitle(String title, [bool selected = false]) {
+  Widget _buildTitle(String title, TextStyle _textStyle, [bool selected = false]) {
     return Text(
       title,
-      style: selected ? activeTextStyle : textStyle,
+      style: selected ? activeTextStyle : _textStyle,
     );
   }
 

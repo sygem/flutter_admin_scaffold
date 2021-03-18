@@ -104,6 +104,14 @@ class MyScaffold extends StatelessWidget {
       route: '/',
       icon: Icons.dashboard,
     ),
+    HeaderMenuItem(
+      title: 'SubHeader',
+      textStyle: TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey,
+      ),
+    ),
     MenuItem(
       title: 'Top Level',
       icon: Icons.file_copy,
@@ -183,8 +191,7 @@ class MyScaffold extends StatelessWidget {
               }).toList();
             },
             onSelected: (item) {
-              print(
-                  'actions: onSelected(): title = ${item.title}, route = ${item.route}');
+              print('actions: onSelected(): title = ${item.title}, route = ${item.route}');
               Navigator.of(context).pushNamed(item.route);
             },
           ),
@@ -207,8 +214,7 @@ class MyScaffold extends StatelessWidget {
         items: _sideBarItems,
         selectedRoute: route,
         onSelected: (item) {
-          print(
-              'sideBar: onTap(): title = ${item.title}, route = ${item.route}');
+          print('sideBar: onTap(): title = ${item.title}, route = ${item.route}');
           if (item.route != null && item.route != route) {
             Navigator.of(context).pushNamed(item.route);
           }

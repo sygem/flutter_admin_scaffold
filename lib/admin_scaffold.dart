@@ -23,8 +23,7 @@ class AdminScaffold extends StatefulWidget {
   _AdminScaffoldState createState() => _AdminScaffoldState();
 }
 
-class _AdminScaffoldState extends State<AdminScaffold>
-    with SingleTickerProviderStateMixin {
+class _AdminScaffoldState extends State<AdminScaffold> with SingleTickerProviderStateMixin {
   static const _mobileThreshold = 768.0;
 
   AnimationController _animationController;
@@ -98,8 +97,7 @@ class _AdminScaffoldState extends State<AdminScaffold>
     final minFlingVelocity = 365.0;
 
     if (details.velocity.pixelsPerSecond.dx.abs() >= minFlingVelocity) {
-      final visualVelocity =
-          details.velocity.pixelsPerSecond.dx / widget.sideBar.width;
+      final visualVelocity = details.velocity.pixelsPerSecond.dx / widget.sideBar.width;
 
       await _animationController.fling(velocity: visualVelocity);
       if (_animationController.isCompleted) {
@@ -155,8 +153,7 @@ class _AdminScaffoldState extends State<AdminScaffold>
                       widget.body,
                       if (_animation.value > 0)
                         Container(
-                          color: Colors.black
-                              .withAlpha((150 * _animation.value).toInt()),
+                          color: Colors.black.withAlpha((150 * _animation.value).toInt()),
                         ),
                       if (_animation.value == 1)
                         GestureDetector(
@@ -165,8 +162,7 @@ class _AdminScaffoldState extends State<AdminScaffold>
                         ),
                       ClipRect(
                         child: SizedOverflowBox(
-                          size: Size(widget.sideBar.width * _animation.value,
-                              double.infinity),
+                          size: Size(widget.sideBar.width * _animation.value, double.infinity),
                           child: widget.sideBar,
                         ),
                       ),
@@ -177,9 +173,7 @@ class _AdminScaffoldState extends State<AdminScaffold>
                       widget.sideBar != null
                           ? ClipRect(
                               child: SizedOverflowBox(
-                                size: Size(
-                                    widget.sideBar.width * _animation.value,
-                                    double.infinity),
+                                size: Size(widget.sideBar.width * _animation.value, double.infinity),
                                 child: widget.sideBar,
                               ),
                             )
