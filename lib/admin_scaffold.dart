@@ -7,17 +7,17 @@ export 'src/side_bar.dart';
 
 class AdminScaffold extends StatefulWidget {
   AdminScaffold({
-    Key key,
+    Key? key,
     this.appBar,
     this.sideBar,
-    @required this.body,
+    required this.body,
     this.backgroundColor,
   }) : super(key: key);
 
-  final AppBar appBar;
-  final SideBar sideBar;
+  final AppBar? appBar;
+  final SideBar? sideBar;
   final Widget body;
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   @override
   _AdminScaffoldState createState() => _AdminScaffoldState();
@@ -26,8 +26,8 @@ class AdminScaffold extends StatefulWidget {
 class _AdminScaffoldState extends State<AdminScaffold> with SingleTickerProviderStateMixin {
   static const _mobileThreshold = 768.0;
 
-  AnimationController _animationController;
-  Animation _animation;
+  late AnimationController _animationController;
+  late Animation _animation;
   bool _isMobile = false;
   bool _isOpenSidebar = false;
   bool _canDragged = false;
@@ -80,13 +80,13 @@ class _AdminScaffoldState extends State<AdminScaffold> with SingleTickerProvider
 
   void _onDragUpdate(DragUpdateDetails details) {
     if (_canDragged) {
-      final delta = details.primaryDelta / widget.sideBar.width;
+      final delta = (details.primaryDelta ?? 0.0) / (widget.sideBar?.width ?? 0.0);
       _animationController.value += delta;
     }
   }
 
   void _dragCloseDrawer(DragUpdateDetails details) {
-    final delta = details.primaryDelta;
+    final delta = details.primaryDelta ?? 0;
     if (delta < 0) {
       _isOpenSidebar = false;
       _animationController.reverse();
@@ -97,7 +97,7 @@ class _AdminScaffoldState extends State<AdminScaffold> with SingleTickerProvider
     final minFlingVelocity = 365.0;
 
     if (details.velocity.pixelsPerSecond.dx.abs() >= minFlingVelocity) {
-      final visualVelocity = details.velocity.pixelsPerSecond.dx / widget.sideBar.width;
+      final visualVelocity = details.velocity.pixelsPerSecond.dx / (widget.sideBar?.width ?? 1.0);
 
       await _animationController.fling(velocity: visualVelocity);
       if (_animationController.isCompleted) {
@@ -162,7 +162,7 @@ class _AdminScaffoldState extends State<AdminScaffold> with SingleTickerProvider
                         ),
                       ClipRect(
                         child: SizedOverflowBox(
-                          size: Size(widget.sideBar.width * _animation.value, double.infinity),
+                          size: Size((widget.sideBar?.width ?? 1.0) * _animation.value, double.infinity),
                           child: widget.sideBar,
                         ),
                       ),
@@ -173,7 +173,7 @@ class _AdminScaffoldState extends State<AdminScaffold> with SingleTickerProvider
                       widget.sideBar != null
                           ? ClipRect(
                               child: SizedOverflowBox(
-                                size: Size(widget.sideBar.width * _animation.value, double.infinity),
+                                size: Size((widget.sideBar?.width ?? 1.0) * _animation.value, double.infinity),
                                 child: widget.sideBar,
                               ),
                             )
@@ -190,7 +190,7 @@ class _AdminScaffoldState extends State<AdminScaffold> with SingleTickerProvider
     );
   }
 
-  AppBar _buildAppBar(AppBar appBar, SideBar sideBar) {
+  AppBar? _buildAppBar(AppBar? appBar, SideBar? sideBar) {
     if (appBar == null) {
       return null;
     }

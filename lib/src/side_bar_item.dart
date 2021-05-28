@@ -4,29 +4,29 @@ import 'menu_item.dart';
 
 class SideBarItem extends StatelessWidget {
   const SideBarItem({
-    @required this.items,
-    @required this.index,
+    required this.items,
+    required this.index,
     this.onSelected,
-    this.selectedRoute,
+    required this.selectedRoute,
     this.depth = 0,
     this.iconColor,
     this.activeIconColor,
-    @required this.textStyle,
+    required this.textStyle,
     this.activeTextStyle,
-    @required this.backgroundColor,
-    @required this.activeBackgroundColor,
-    @required this.borderColor,
+    required this.backgroundColor,
+    required this.activeBackgroundColor,
+    required this.borderColor,
   });
 
   final List<MenuItem> items;
   final int index;
-  final void Function(MenuItem item) onSelected;
+  final void Function(MenuItem item)? onSelected;
   final String selectedRoute;
   final int depth;
-  final Color iconColor;
-  final Color activeIconColor;
+  final Color? iconColor;
+  final Color? activeIconColor;
   final TextStyle textStyle;
-  final TextStyle activeTextStyle;
+  final TextStyle? activeTextStyle;
   final Color backgroundColor;
   final Color activeBackgroundColor;
   final Color borderColor;
@@ -56,13 +56,13 @@ class SideBarItem extends StatelessWidget {
       return ListTile(
         contentPadding: _getTilePadding(depth),
         leading: _buildIcon(item, selected),
-        title: _buildTitle(item.title, item.textStyle != null ? item.textStyle : textStyle, selected),
+        title: _buildTitle(item.title, item.textStyle != null ? item.textStyle! : textStyle, selected),
         selected: selected,
         tileColor: backgroundColor,
         selectedTileColor: activeBackgroundColor,
         onTap: () {
           if (onSelected != null) {
-            onSelected(item);
+            onSelected!(item);
           }
         },
         dense: item is HeaderMenuItem ? true : false,
@@ -111,15 +111,15 @@ class SideBarItem extends StatelessWidget {
     return false;
   }
 
-  Widget _buildIcon(MenuItem item, [bool selected = false]) {
+  Widget? _buildIcon(MenuItem item, [bool selected = false]) {
     return item.icon != null
         ? Icon(
-            item.icon,
+            item.icon!,
             size: 22,
             color: selected
                 ? activeIconColor != null
                     ? activeIconColor
-                    : activeTextStyle.color
+                    : activeTextStyle?.color
                 : iconColor != null
                     ? iconColor
                     : textStyle.color,
